@@ -85,7 +85,7 @@ class ExamResult:
     def __str__(self) -> str:
         return f'\tExam ID: {self.exam_id}\n\tType: {self.exam_id}\n\t\t>: {self.result_is_positive}'
 
-class Notes:
+class EvolutionNotes:
     """Class representing an evolution note"""
     def __init__(self, patient, note):
         self.patient = patient
