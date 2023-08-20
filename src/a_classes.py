@@ -11,6 +11,56 @@ class Date:
     def __str__(self) -> str:
         return f'{self.day}/{self.month}/{self.year}'
 
+class Doctor:
+    """Class representing a doctor"""
+
+    def __init__(self, doctor_id, name, username, password, specialty):
+        self.__doctor_id = doctor_id
+        self.__name = name
+        self.__username = username
+        self.__password = password
+        self.__specialty = specialty
+
+    @property
+    def doctor_id(self):
+        """Returns the doctor ID"""
+        return self.__doctor_id
+
+    @property
+    def name(self):
+        """Returns the name"""
+        return self.__name
+
+    @name.setter
+    def name(self, new_name):
+        self.__name = new_name
+
+    @property
+    def username(self):
+        """Returns the username"""
+        return self.__username
+
+    @username.setter
+    def username(self, new_username):
+        self.__username = new_username
+
+    @property
+    def password(self):
+        """Returns the password"""
+        return self.__password
+
+    @property
+    def specialty(self):
+        """Returns the specialty"""
+        return self.__specialty
+
+    @specialty.setter
+    def specialty(self, new_specialty):
+        self.__specialty = new_specialty
+
+    def __repr__(self) -> str:
+        return f'\n\tID: {self.__doctor_id}\n\tName: {self.__name}\n\tUsername: {self.__username}\n\tSpecialty: {self.__specialty}\n'
+
 class Patient:
     """Class representing a patient"""
 
