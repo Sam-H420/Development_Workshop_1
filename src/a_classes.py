@@ -131,7 +131,7 @@ class ExamResult:
         self.__result = new_result
 
     def __repr__(self) -> str:
-        return f'\tExam ID: {self.exam_id}\n\tType: {self.exam_type}\n\t>: {self.__result}'
+        return f'\n\tExam ID: {self.exam_id}\n\tType: {self.exam_type}\n\t>: {self.__result}\n'
 
 class EvolutionNotes:
     """Class representing an evolution note"""
@@ -150,3 +150,6 @@ class EvolutionNotes:
 
     def __str__(self) -> str:
         return f'{self.__note}'
+    
+    def __repr__(self) -> str:
+        return f'\n{self.__note}\n'

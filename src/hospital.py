@@ -32,9 +32,19 @@ class Hospital:
 
     def _get_patient(self, patient_id):
         """Returns a patient by its id"""
+        index = 0
+        find = False
         for patient in self.__patient_histories:
             if patient.patient_id == patient_id:
-                return int(self.__patient_histories.index(patient))
+                find = True
+                index = self.__patient_histories.index(patient)
+                break
+
+        if find:
+            return int(index)
+        else:
+            print('Patient not found\n')
+            self._menu()
         return None
 
     def _get_stats(self):
@@ -43,21 +53,31 @@ class Hospital:
 
     def _patient_menu(self, patient_index):
         """Patient menu"""
-        print(f'{self.__patient_histories[patient_index]}\n\n1. Add note\n2. Add exam result\n3. Add medicament\n4. Exit\n')
+        print(f'\n{self.__patient_histories[patient_index].name}\n\n0. History resume\n1. All exams\n2. All notes\n3. Add note\n4. Add exam result\n5. Add medicament\n6. Exit\n')
         option = input('Select an option: ')
-        if option == '1':
+        
+        if option == '0':
+            print(self.__patient_histories[patient_index])
+            self._patient_menu(patient_index)
+        elif option == '1':
+            print(self.__patient_histories[patient_index].exam_results)
+            self._patient_menu(patient_index)
+        elif option == '2':
+            print(self.__patient_histories[patient_index].notes)
+            self._patient_menu(patient_index)
+        elif option == '3':
             new_note = cf.evolution_note_form(self.__patient_histories[patient_index])
             self.__patient_histories[patient_index].add_notes(new_note)
             self._patient_menu(patient_index)
-        elif option == '2':
+        elif option == '4':
             new_exam_result = cf.exam_result_form(self.__patient_histories[patient_index])
             self.__patient_histories[patient_index].add_exam_result(new_exam_result)
             self._patient_menu(patient_index)
-        elif option == '3':
+        elif option == '5':
             new_medicament = cf.medicament_form()
             self.__patient_histories[patient_index].add_medicament(new_medicament)
             self._patient_menu(patient_index)
-        elif option == '4':
+        elif option == '6':
             self._menu()
         else:
             print('Invalid option')
@@ -74,8 +94,10 @@ class Hospital:
         elif option == '2':
             new_patient = cf.patient_history_form()
             self._add_patient(new_patient)
+            self._menu()
         elif option == '3':
             print(self._get_stats())
+            self._menu()
         elif option == '4':
             pass
         else:
