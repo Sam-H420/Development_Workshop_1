@@ -7,69 +7,61 @@ from patient_history import PatientHistory
 class Hospital:
     """Class representing a hospital"""
 
-    def __init__(self, name, patients, doctors):
+    def __init__(self, name, patient_histories, doctors):
         self.name = name
-        self.__patients = patients
+        self.__patient_histories = patient_histories
         self.__doctors = doctors
 
     @property
     def patients(self):
         """Returns all the patients"""
-        return self.__patients
+        return self.__patient_histories.patient
 
     @property
     def doctors(self):
         """Returns all the doctors"""
         return self.__doctors
 
-    @cf.patient_form
-    def _add_patient(self, *new_patient):
+    def _add_patient(self, new_patient_history):
         """Adds a new patient"""
-        self.__patients.append(new_patient)
+        self.__patient_histories.append(new_patient_history)
 
-    @cf.doctor_form
     def _add_doctor(self, new_doctor):
         """Adds a new doctor"""
         self.__doctors.append(new_doctor)
 
     def _get_patient(self, patient_id):
         """Returns a patient by its id"""
-        find = False
-        index = 0
-        for patient in self.__patients:
+        for patient in self.__patient_histories:
             if patient.patient_id == patient_id:
-                find = True
-                index = self.__patients.index(patient)
-            else:
-                find = False
-        if find:
-            return self.__patients[index]
-        else:
-            return None
+                return int(self.__patient_histories.index(patient))
+        return None
 
     def _get_stats(self):
         """Returns the stats of the hospital"""
-        return f'Patients: {len(self.__patients)}\nDoctors: {len(self.__doctors)}'
+        return f'Patients: {len(self.__patient_histories)}\nDoctors: {len(self.__doctors)}'
 
-    def patient_menu(self, patient):
+    def _patient_menu(self, patient_index):
         """Patient menu"""
-        print(f'Welcome {patient.name}\n1. See patient history\n2. See vital signs\n3. See exam results\n4. See medicaments\n5. See evolution notes\n6. Exit\n')
+        print(f'{self.__patient_histories[patient_index]}\n\n1. Add note\n2. Add exam result\n3. Add medicament\n4. Exit\n')
         option = input('Select an option: ')
         if option == '1':
-            print(patient.patient_history)
+            new_note = cf.evolution_note_form(self.__patient_histories[patient_index])
+            self.__patient_histories[patient_index].add_notes(new_note)
+            self._patient_menu(patient_index)
         elif option == '2':
-            print(patient.patient_history.vital_signs)
+            new_exam_result = cf.exam_result_form(self.__patient_histories[patient_index])
+            self.__patient_histories[patient_index].add_exam_result(new_exam_result)
+            self._patient_menu(patient_index)
         elif option == '3':
-            print(patient.patient_history.exam_results)
+            new_medicament = cf.medicament_form()
+            self.__patient_histories[patient_index].add_medicament(new_medicament)
+            self._patient_menu(patient_index)
         elif option == '4':
-            print(patient.patient_history.medicaments)
-        elif option == '5':
-            print(patient.patient_history.notes)
-        elif option == '6':
-            pass
+            self._menu()
         else:
             print('Invalid option')
-            self.patient_menu(patient)
+            self._patient_menu(patient_index)
 
     def _menu(self):
         """Main menu of the hospital"""
@@ -78,9 +70,10 @@ class Hospital:
         if option == '1':
             search_id = input('Enter the patient id: ')
             result = self._get_patient(search_id)
-            self.patient_menu(result)
+            self._patient_menu(result)
         elif option == '2':
-            self._add_patient()
+            new_patient = cf.patient_history_form()
+            self._add_patient(new_patient)
         elif option == '3':
             print(self._get_stats())
         elif option == '4':

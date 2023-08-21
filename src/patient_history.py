@@ -46,15 +46,15 @@ class PatientHistory(a.Patient):
         """Returns the last exam result of the clinical history"""
         return self.__exam_results[len(self.__exam_results) - 1]
 
-    def _add_notes(self, new_note):
+    def add_notes(self, new_note):
         """Adds a new note to the clinical history"""
         self.__evolution_notes.append(new_note)
 
-    def _add_medicament(self, new_medicament):
+    def add_medicament(self, new_medicament):
         """Adds a new medicament to the clinical history"""
         self.__medicaments.append(new_medicament)
 
-    def _add_exam_result(self, new_exam_result):
+    def add_exam_result(self, new_exam_result):
         """Adds a new exam result to the clinical history"""
         self.__exam_results.append(new_exam_result)
 
