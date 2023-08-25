@@ -142,6 +142,17 @@ class ExamResult:
     def __repr__(self) -> str:
         return f'\n\tExam ID: {self.exam_id}\n\tType: {self.exam_type}\n\t>: {self.__result}\n'
 
+class DiagnosticImage:
+    """Class representing a diagnostic image"""
+
+    def __init__(self, patient, image_id, image_type):
+        self.patient = patient
+        self.image_id = image_id
+        self.image_type = image_type
+
+    def __repr__(self) -> str:
+        return f'\n\tImage ID: {self.image_id}\n\tType: {self.image_type}\n'
+
 class EvolutionNotes:
     """Class representing an evolution note"""
     def __init__(self, patient, note):

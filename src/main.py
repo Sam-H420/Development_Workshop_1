@@ -26,6 +26,10 @@ exam_result_2 = a.ExamResult(patient_2, '987654321', 'Blood test', 'Normal')
 exam_result_3 = a.ExamResult(patient_1, '123456789', 'Urine test', 'Normal')
 exam_result_4 = a.ExamResult(patient_2, '987654321', 'Urine test', 'Normal')
 
+# create 2 random diagnostic images with patient, image_id, name
+diagnostic_image_1 = a.DiagnosticImage(patient_1, '123456789', 'X-Ray')
+diagnostic_image_2 = a.DiagnosticImage(patient_2, '987654321', 'X-Ray')
+
 # create 2 random medicaments with medicament_id, name, prescription
 medicament_1 = a.Medicament('123456789', 'Paracetamol', '1-1-1')
 medicament_2 = a.Medicament('987654321', 'Ibuprofen', '1-1-1')
@@ -37,8 +41,8 @@ evolution_note_3 = a.EvolutionNotes(patient_1, 'Patient is feeling bad')
 evolution_note_4 = a.EvolutionNotes(patient_2, 'Patient is feeling bad')
 
 # create 2 random patient histories with patient, vital_signs, exam_result, medicament, evolution_note
-patient_history_1 = PatientHistory(patient_1, vital_signs_1, [exam_result_1,exam_result_3], [medicament_1,medicament_2], [evolution_note_1, evolution_note_3])
-patient_history_2 = PatientHistory(patient_2, vital_signs_2, [exam_result_2,exam_result_4], [medicament_1,medicament_2], [evolution_note_2, evolution_note_4])
+patient_history_1 = PatientHistory(patient_1, vital_signs_1, [exam_result_1,exam_result_3], [diagnostic_image_1,diagnostic_image_2], [medicament_1,medicament_2], [evolution_note_1, evolution_note_3])
+patient_history_2 = PatientHistory(patient_2, vital_signs_2, [exam_result_2,exam_result_4], [diagnostic_image_1,diagnostic_image_2], [medicament_1,medicament_2], [evolution_note_2, evolution_note_4])
 
 # create a random hospital with name, patient_histories, doctors
 hospital = Hospital('Hospital', [patient_history_1, patient_history_2], [doctor_1, doctor_2])

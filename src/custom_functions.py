@@ -54,11 +54,19 @@ def vital_signs_form(patient):
 # define exam_result_form function
 def exam_result_form(patient):
     """function to add an exam result"""
-    exam_id = int(input('ID: '))
+    exam_id = int(input(' Exam ID: '))
     name = input('Name: ')
     result = input('Result: ')
     exam_result = a.ExamResult(patient, exam_id, name, result)
     return exam_result
+
+# define diagnostic_image_form function
+def diagnostic_image_form(patient):
+    """function to add a diagnostic image"""
+    image_id = int(input('Image ID: '))
+    name = input('Image type: ')
+    diagnostic_image = a.DiagnosticImage(patient, image_id, name)
+    return diagnostic_image
 
 # define medicament_form function
 def medicament_form():
@@ -82,7 +90,8 @@ def patient_history_form():
     patient = patient_form()
     vital_signs = vital_signs_form(patient)
     exam_result = (exam_result_form(patient))
+    diagnostic_image = (diagnostic_image_form(patient))
     medicament = (medicament_form())
     evolution_note = (evolution_note_form(patient))
-    patient_history = PatientHistory(patient, vital_signs, exam_result, medicament, evolution_note)
+    patient_history = PatientHistory(patient, vital_signs, exam_result, diagnostic_image, medicament, evolution_note)
     return patient_history

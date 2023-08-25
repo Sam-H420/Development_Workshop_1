@@ -54,7 +54,7 @@ class Hospital:
         name = self.__patient_histories[patient_index].name
         if self.__patient_histories[patient_index].bed_number is not None:
             name = self.__patient_histories[patient_index].name + ' (Critic)'
-        print(f'\n{name}\n\n0. History resume\n1. All exams\n2. All notes\n3. Add note\n4. Add exam result\n5. Add medicament\n6. Exit\n')
+        print(f'\n{name}\n\n0. History resume\n1. All exams\n2. All images\n3. All notes\n4. Add note\n5. Add exam result\n6. Add diagnostic image\n7. Add medicament\n8. Exit\n')
         option = input('Select an option: ')
 
         if option == '0':
@@ -64,21 +64,28 @@ class Hospital:
             print(self.__patient_histories[patient_index].exam_results)
             self._patient_menu(patient_index)
         elif option == '2':
-            print(self.__patient_histories[patient_index].notes)
+            print(self.__patient_histories[patient_index].diagnostic_images)
             self._patient_menu(patient_index)
         elif option == '3':
+            print(self.__patient_histories[patient_index].notes)
+            self._patient_menu(patient_index)
+        elif option == '4':
             new_note = cf.evolution_note_form(self.__patient_histories[patient_index])
             self.__patient_histories[patient_index].add_notes(new_note)
             self._patient_menu(patient_index)
-        elif option == '4':
+        elif option == '5':
             new_exam_result = cf.exam_result_form(self.__patient_histories[patient_index])
             self.__patient_histories[patient_index].add_exam_result(new_exam_result)
             self._patient_menu(patient_index)
-        elif option == '5':
+        elif option == '6':
+            new_diagnostic_image = cf.diagnostic_image_form(self.__patient_histories[patient_index])
+            self.__patient_histories[patient_index].add_diagnostic_image(new_diagnostic_image)
+            self._patient_menu(patient_index)
+        elif option == '7':
             new_medicament = cf.medicament_form()
             self.__patient_histories[patient_index].add_medicament(new_medicament)
             self._patient_menu(patient_index)
-        elif option == '6':
+        elif option == '8':
             self._menu()
         else:
             print('Invalid option')
