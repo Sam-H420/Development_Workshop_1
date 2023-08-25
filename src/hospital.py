@@ -1,8 +1,6 @@
 """Main information cluster"""
 
 import custom_functions as cf
-import a_classes as a
-from patient_history import PatientHistory
 
 class Hospital:
     """Class representing a hospital"""
@@ -53,9 +51,12 @@ class Hospital:
 
     def _patient_menu(self, patient_index):
         """Patient menu"""
-        print(f'\n{self.__patient_histories[patient_index].name}\n\n0. History resume\n1. All exams\n2. All notes\n3. Add note\n4. Add exam result\n5. Add medicament\n6. Exit\n')
+        name = self.__patient_histories[patient_index].name
+        if self.__patient_histories[patient_index].bed_number is not None:
+            name = self.__patient_histories[patient_index].name + ' (Critic)'
+        print(f'\n{name}\n\n0. History resume\n1. All exams\n2. All notes\n3. Add note\n4. Add exam result\n5. Add medicament\n6. Exit\n')
         option = input('Select an option: ')
-        
+
         if option == '0':
             print(self.__patient_histories[patient_index])
             self._patient_menu(patient_index)

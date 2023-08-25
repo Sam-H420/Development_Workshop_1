@@ -19,8 +19,15 @@ def patient_form():
     name = input('Name: ')
     genre = input('Genre: ')
     birth_date = date_form()
-    bed_number = input('Bed number: ')
-    patient = a.Patient(patient_id, name, genre, birth_date, bed_number)
+    is_critic = input('Is critic? (Patient is not critic by default) (y/n): ')
+    if is_critic == 'y':
+        bed_number = input('Bed number: ')
+        patient = a.Patient(patient_id, name, genre, birth_date, bed_number)
+    elif is_critic == 'n':
+        patient = a.Patient(patient_id, name, genre, birth_date)
+    else:
+        print('Invalid option')
+        patient = a.Patient(patient_id, name, genre, birth_date)
     return patient
 
 # define doctor_form function

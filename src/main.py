@@ -9,7 +9,7 @@ birth_date_1 = a.Date(1, 1, 2000)
 birth_date_2 = a.Date(1, 1, 2000)
 
 # create 2 random patients
-patient_1 = a.Patient('12345678A', 'John Doe', 'M', birth_date_1, '1A')
+patient_1 = a.Patient('12345678A', 'John Doe', 'M', birth_date_1)
 patient_2 = a.Patient('87654321B', 'Jane Doe', 'F', birth_date_2, '2B')
 
 # create 2 random doctors with doctor_id, name, username, password, specialty
