@@ -64,17 +64,18 @@ class Doctor:
 class Patient:
     """Class representing a patient"""
 
-    is_critic = False
+    __is_critic = False
+    __is_out = False
 
-    def __init__(self, patient_id, name, genre, birth_date, *bed_number):
+    def __init__(self, patient_id, name, genre, birth_date, bed_number = None):
         self.__patient_id = patient_id
         self.name = name
         self.genre = genre
         self.birth_date = birth_date
+        self.__bed_number = bed_number
         if bed_number is not None:
-            self.is_critic = True
-            self.__bed_number = bed_number
-
+            self.__is_out = False
+            self.__is_critic = True
     @property
     def bed_number(self):
         """Returns the bed number if exists"""
@@ -87,12 +88,30 @@ class Patient:
         self.__bed_number = new_bed_number
 
     @property
+    def is_critic(self):
+        """Returns if the patient is critic"""
+        return self.__is_critic
+
+    @property
+    def is_out(self):
+        """Returns if the patient is out"""
+        return self.__is_out
+
+    @is_out.setter
+    def is_out(self, new_is_out):
+        self.__is_out = new_is_out
+
+    if __is_out:
+        __is_critic = False
+        __bed_number = None
+
+    @property
     def patient_id(self):
         """Returns the patient ID"""
         return self.__patient_id
 
     def __str__(self) -> str:
-        if self.is_critic:
+        if self.__is_critic:
             return f'ID: {self.__patient_id}\nName: {self.name}\nGenre: {self.genre}\nBirth_date: {self.birth_date}\nBed_number: {self.__bed_number}\n'
         else:
             return f'ID: {self.__patient_id}\nName: {self.name}\nGenre: {self.genre}\nBirth_date: {self.birth_date}\n'

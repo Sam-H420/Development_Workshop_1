@@ -47,4 +47,4 @@ patient_history_2 = PatientHistory(patient_2, vital_signs_2, [exam_result_2,exam
 # create a random hospital with name, patient_histories, doctors
 hospital = Hospital('Hospital', [patient_history_1, patient_history_2], [doctor_1, doctor_2])
 
-hospital._menu()
+hospital.login()

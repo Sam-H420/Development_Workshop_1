@@ -2,6 +2,16 @@
 
 import custom_functions as cf
 
+# cronic diseases list
+cronic_diseases = [
+    'Diabetes',
+    'Asthma',
+    'Cancer',
+    'Arthritis',
+    'Obesity',
+    'Alzheimer'
+]
+
 class Hospital:
     """Class representing a hospital"""
 
@@ -47,14 +57,37 @@ class Hospital:
 
     def _get_stats(self):
         """Returns the stats of the hospital"""
-        return f'Patients: {len(self.__patient_histories)}\nDoctors: {len(self.__doctors)}'
+
+        ocupation = 0
+        for patient in self.__patient_histories:
+            if patient.bed_number is not None:
+                ocupation += 1
+
+        prescription_per_patient = 0
+        for patient in self.__patient_histories:
+            prescription_per_patient += len(patient.medicaments)
+        prescription_per_patient = prescription_per_patient/len(self.__patient_histories)
+
+        cronic_patients = 0
+        for patient in self.__patient_histories:
+            for exam in patient.exam_results:
+                if exam.result == 'Positive' and exam.name in cronic_diseases:
+                    cronic_patients += 1
+                    break
+
+        outside_patients = 0
+        for patient in self.__patient_histories:
+            if patient.is_out:
+                outside_patients += 1
+
+        return f'Admited Patients: {len(self.__patient_histories)}\nOccupation: {(ocupation/300)*100}%\nOut patients: {outside_patients}\nPescriptions per patient (Average): {prescription_per_patient}\nCronic patients: {cronic_patients}\n'
 
     def _patient_menu(self, patient_index):
         """Patient menu"""
         name = self.__patient_histories[patient_index].name
         if self.__patient_histories[patient_index].bed_number is not None:
             name = self.__patient_histories[patient_index].name + ' (Critic)'
-        print(f'\n{name}\n\n0. History resume\n1. All exams\n2. All images\n3. All notes\n4. Add note\n5. Add exam result\n6. Add diagnostic image\n7. Add medicament\n8. Exit\n')
+        print(f'\n{name}\n\n0. History resume\n1. All exams\n2. All images\n3. All notes\n4. Add note\n5. Add exam result\n6. Add diagnostic image\n7. Add medicament\n8. Check in\nCheck out\n10. Exit\n')
         option = input('Select an option: ')
 
         if option == '0':
@@ -86,6 +119,14 @@ class Hospital:
             self.__patient_histories[patient_index].add_medicament(new_medicament)
             self._patient_menu(patient_index)
         elif option == '8':
+            self.__patient_histories[patient_index].is_out = False
+            self.__patient_histories[patient_index].bed_number = input('Bed number: ')
+            self._patient_menu(patient_index)
+        elif option == '9':
+            self.__patient_histories[patient_index].is_out = True
+            self.__patient_histories[patient_index].bed_number = None
+            self._patient_menu(patient_index)
+        elif option == '10':
             self._menu()
         else:
             print('Invalid option')
@@ -111,3 +152,27 @@ class Hospital:
         else:
             print('Invalid option')
             self._menu()
+
+    # define login function
+    def login(self):
+        """Login function"""
+        print('Welcome to the hospital system\n')
+        username = input('Username: ')
+        password = input('Password: ')
+        find = False
+        for doctor in self.__doctors:
+            if doctor.username == username and doctor.password == password:
+                find = True
+                self._menu()
+                break
+        if not find:
+            print('Invalid credentials\nWould you like to register instead? (y/n/c)')
+            option = input('Select an option: ')
+            if option == 'y':
+                new_doctor = cf.doctor_form()
+                self._add_doctor(new_doctor)
+                self.login()
+            elif option == 'n':
+                self.login()
+            elif option == 'c':
+                pass
