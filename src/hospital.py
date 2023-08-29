@@ -87,7 +87,7 @@ class Hospital:
         name = self.__patient_histories[patient_index].name
         if self.__patient_histories[patient_index].bed_number is not None:
             name = self.__patient_histories[patient_index].name + ' (Critic)'
-        print(f'\n{name}\n\n0. History resume\n1. All exams\n2. All images\n3. All notes\n4. Add note\n5. Add exam result\n6. Add diagnostic image\n7. Add medicament\n8. Check in\nCheck out\n10. Exit\n')
+        print(f'\nPatent: {name}\n\n0. History resume\n1. All exams\n2. All images\n3. All notes\n4. Add note\n5. Add exam result\n6. Add diagnostic image\n7. Add medicament\n8. Check in\n9. Check out\n10. Exit\n')
         option = input('Select an option: ')
 
         if option == '0':
@@ -119,13 +119,25 @@ class Hospital:
             self.__patient_histories[patient_index].add_medicament(new_medicament)
             self._patient_menu(patient_index)
         elif option == '8':
-            self.__patient_histories[patient_index].is_out = False
-            self.__patient_histories[patient_index].bed_number = input('Bed number: ')
-            self._patient_menu(patient_index)
+            if self.__patient_histories[patient_index].is_out:    
+                self.__patient_histories[patient_index].is_out = False
+                self.__patient_histories[patient_index].in_date = cf.date_form()
+                self.__patient_histories[patient_index].bed_number = input('Bed number: ')
+                print('Patient checked in successfully')
+                self._patient_menu(patient_index)
+            else:
+                print('Patient is already checked in')
+                self._patient_menu(patient_index)
         elif option == '9':
-            self.__patient_histories[patient_index].is_out = True
-            self.__patient_histories[patient_index].bed_number = None
-            self._patient_menu(patient_index)
+            if self.__patient_histories[patient_index].is_out:
+                print('Patient is already out')
+                self._patient_menu(patient_index)
+            else:
+                self.__patient_histories[patient_index].is_out = True
+                self.__patient_histories[patient_index].out_date = cf.date_form()
+                self.__patient_histories[patient_index].bed_number = None
+                print('Patient checked out successfully')
+                self._patient_menu(patient_index)
         elif option == '10':
             self._menu()
         else:
@@ -134,7 +146,7 @@ class Hospital:
 
     def _menu(self):
         """Main menu of the hospital"""
-        print(f'Welcome to {self.name}\n1. Search patient\n2. Register patient\n3. Stats\n4. Exit\n')
+        print(f'\nWelcome to {self.name}\n1. Search patient\n2. Register patient\n3. Stats\n4. Exit\n')
         option = input('Select an option: ')
         if option == '1':
             search_id = input('Enter the patient id: ')
@@ -143,6 +155,7 @@ class Hospital:
         elif option == '2':
             new_patient = cf.patient_history_form()
             self._add_patient(new_patient)
+            print('Patient added successfully')
             self._menu()
         elif option == '3':
             print(self._get_stats())

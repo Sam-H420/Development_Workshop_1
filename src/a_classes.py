@@ -65,14 +65,18 @@ class Patient:
     """Class representing a patient"""
 
     __is_critic = False
-    __is_out = False
+    __is_out = True
+    __in_date = None
+    __out_date = None
 
-    def __init__(self, patient_id, name, genre, birth_date, bed_number = None):
+    def __init__(self, patient_id, name, genre, birth_date, bed_number = None, in_date = None, out_date = None):
         self.__patient_id = patient_id
         self.name = name
         self.genre = genre
         self.birth_date = birth_date
         self.__bed_number = bed_number
+        self.__in_date = in_date
+        self.__out_date = out_date
         if bed_number is not None:
             self.__is_out = False
             self.__is_critic = True
@@ -100,6 +104,24 @@ class Patient:
     @is_out.setter
     def is_out(self, new_is_out):
         self.__is_out = new_is_out
+
+    @property
+    def in_date(self):
+        """Returns the in date"""
+        return self.__in_date
+
+    @in_date.setter
+    def in_date(self, new_in_date):
+        self.__in_date = new_in_date
+
+    @property
+    def out_date(self):
+        """Returns the out date"""
+        return self.__out_date
+
+    @out_date.setter
+    def out_date(self, new_out_date):
+        self.__out_date = new_out_date
 
     if __is_out:
         __is_critic = False

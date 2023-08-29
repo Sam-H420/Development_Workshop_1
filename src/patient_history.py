@@ -6,7 +6,7 @@ class PatientHistory(a.Patient):
     """Class representing the clinical history of a patient"""
 
     def __init__(self, patient, vital_signs, exam_results, diagnostic_images, medicaments, evolution_notes):
-        super().__init__(patient.patient_id, patient.name, patient.genre, patient.birth_date, patient.bed_number)
+        super().__init__(patient.patient_id, patient.name, patient.genre, patient.birth_date, patient.bed_number, patient.in_date, patient.out_date)
         self.__vital_signs = vital_signs
         self.__exam_results = exam_results
         self.__diagnostic_images = diagnostic_images

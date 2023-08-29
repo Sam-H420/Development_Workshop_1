@@ -6,9 +6,10 @@ from patient_history import PatientHistory
 # define a decorator to add a date
 def date_form():
     """Function to add a date to a class"""
-    day = int(input('Day: '))
-    month = int(input('Month: '))
-    year = int(input('Year: '))
+    date = input('Date (dd/mm/yyyy): ')
+    day = int(date[0:2])
+    month = int(date[3:5])
+    year = int(date[6:10])
     date = a.Date(day, month, year)
     return date
 
@@ -19,10 +20,11 @@ def patient_form():
     name = input('Name: ')
     genre = input('Genre: ')
     birth_date = date_form()
-    is_critic = input('Is critic? (Patient is not critic by default) (y/n): ')
+    is_critic = input('\nIs critic? (Patient is not critic by default) (y/n): ')
     if is_critic == 'y':
+        in_date = date_form()
         bed_number = input('Bed number: ')
-        patient = a.Patient(patient_id, name, genre, birth_date, bed_number)
+        patient = a.Patient(patient_id, name, genre, birth_date, bed_number, in_date)
     elif is_critic == 'n':
         patient = a.Patient(patient_id, name, genre, birth_date)
     else:
@@ -87,11 +89,17 @@ def evolution_note_form(patient):
 # define patient_history_form function
 def patient_history_form():
     """function to add a patient history"""
+    print('\nPatient data:')
     patient = patient_form()
+    print('\nVital signs:')
     vital_signs = vital_signs_form(patient)
-    exam_result = (exam_result_form(patient))
-    diagnostic_image = (diagnostic_image_form(patient))
-    medicament = (medicament_form())
-    evolution_note = (evolution_note_form(patient))
-    patient_history = PatientHistory(patient, vital_signs, exam_result, diagnostic_image, medicament, evolution_note)
+    print('\nExam result:')
+    exam_result = exam_result_form(patient)
+    print('\nDiagnostic image:')
+    diagnostic_image = diagnostic_image_form(patient)
+    print('\nMedicament:')
+    medicament = medicament_form()
+    print('\nEvolution note:')
+    evolution_note = evolution_note_form(patient)
+    patient_history = PatientHistory(patient, vital_signs, [exam_result], [diagnostic_image], [medicament], [evolution_note])
     return patient_history
